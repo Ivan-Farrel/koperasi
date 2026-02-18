@@ -1,11 +1,17 @@
 providers = ["php"]
 
 [phases.setup]
-nixPkgs = ["php", "phpExtensions.gd", "phpExtensions.pdo_mysql"]
+# Tambahkan 'composer' di daftar paket
+nixPkgs = ["php", "composer", "phpExtensions.gd", "phpExtensions.pdo_mysql", "nodejs"]
+
+[phases.install]
+# Pindahkan composer install ke sini
+cmds = ["composer install --no-dev --optimize-autoloader --ignore-platform-reqs"]
 
 [phases.build]
+# Di sini khusus untuk perintah artisan dan build aset (npm)
 cmds = [
-  "composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd",
-  "php artisan key:generate || true",
+  "npm install && npm run build",
+  "php artisan key:generate --force",
   "php artisan storage:link || true"
 ]
