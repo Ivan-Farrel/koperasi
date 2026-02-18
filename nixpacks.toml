@@ -5,7 +5,7 @@ nixPkgs = ["php", "phpExtensions.gd", "phpExtensions.pdo_mysql"]
 
 [phases.build]
 cmds = [
-  "composer install --no-dev --optimize-autoloader",
+  "composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd",
   "php artisan key:generate || true",
   "php artisan storage:link || true"
 ]
