@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BukuTamuAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Layanan;
 use App\Models\Setting;
+use App\Http\Controllers\Admin\CarouselController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/buku-tamu/export', [BukuTamuAdminController::class, 'export'])
         ->name('buku_tamu.export');
 });
+
+Route::get('/carousel', [CarouselController::class, 'index'])->name('carousel.index');
+Route::post('/carousel', [CarouselController::class, 'store'])->name('carousel.store');
+Route::delete('/carousel/{carousel}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
 
 /*
 |--------------------------------------------------------------------------

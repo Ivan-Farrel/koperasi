@@ -104,9 +104,9 @@
 <div class="container mt-4">
     <div class="carousel-container animate__animated animate__fadeIn">
         <div class="carousel-overlay"></div>
-        <img src="{{ asset('images/banner1.jpg') }}" class="carousel-item-img" style="opacity:1">
-        <img src="{{ asset('images/banner2.jpg') }}" class="carousel-item-img" style="opacity:0">
-        <img src="{{ asset('images/banner3.jpg') }}" class="carousel-item-img" style="opacity:0">
+        <img src="{{ asset('image/banner1.png') }}" class="carousel-item-img" style="opacity:1">
+        <img src="{{ asset('image/banner2.png') }}" class="carousel-item-img" style="opacity:0">
+        <img src="{{ asset('image/banner3.png') }}" class="carousel-item-img" style="opacity:0">
     </div>
 
     <div class="row g-4 mb-5">
