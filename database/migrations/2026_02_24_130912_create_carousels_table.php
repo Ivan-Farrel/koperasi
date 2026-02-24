@@ -9,16 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('carousels', function (Blueprint $table) {
-            $table->id();
-            $table->string('image');      // path gambar
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
-    }
-
+public function up()
+{
+    Schema::create('carousels', function (Blueprint $table) {
+        $table->id();
+        $table->string('title')->nullable();
+        $table->string('image');
+        $table->boolean('is_active')->default(true);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

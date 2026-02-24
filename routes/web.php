@@ -6,9 +6,10 @@ use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\BukuTamuController;
 use App\Http\Controllers\Admin\BukuTamuAdminController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CarouselController;
 use App\Models\Layanan;
 use App\Models\Setting;
-use App\Http\Controllers\Admin\CarouselController;
+use App\Models\Carousel; 
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,14 @@ use App\Http\Controllers\Admin\CarouselController;
 */
 Route::get('/', function () {
     $layanans = Layanan::all();
+    
+    // AMBIL DATA CAROUSEL DARI DATABASE
+    $carousels = Carousel::where('is_active', true)->get();
 
     $statusSistem = Setting::where('key', 'system_status')->value('value') ?? 'aktif';
 
-    return view('welcome', compact('layanans', 'statusSistem'));
+    // Kirim carousel ke view welcome
+    return view('welcome', compact('layanans', 'statusSistem', 'carousels'));
 })->name('home');
 
 /*
@@ -44,12 +49,12 @@ Route::post('/buku-tamu', [BukuTamuController::class, 'store'])->name('buku_tamu
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN AREA
+| ADMIN AREA (PROTECTED BY AUTH)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Dashboard Admin (PAKAI CONTROLLER)
+    // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Toggle Status Sistem
@@ -59,6 +64,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // CRUD Layanan
     Route::resource('layanan', LayananController::class);
 
+    // CRUD Carousel (DIPINDAH KE DALAM GRUP ADMIN AGAR AMAN)
+    Route::resource('carousel', CarouselController::class)->except(['show', 'edit', 'update']);
+
     // Buku Tamu (Admin)
     Route::get('/buku-tamu', [BukuTamuAdminController::class, 'index'])
         ->name('buku_tamu.index');
@@ -67,10 +75,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/buku-tamu/export', [BukuTamuAdminController::class, 'export'])
         ->name('buku_tamu.export');
 });
-
-Route::get('/carousel', [CarouselController::class, 'index'])->name('carousel.index');
-Route::post('/carousel', [CarouselController::class, 'store'])->name('carousel.store');
-Route::delete('/carousel/{carousel}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
 
 /*
 |--------------------------------------------------------------------------

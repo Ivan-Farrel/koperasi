@@ -54,7 +54,7 @@
             z-index: 1;
         }
 
-        /* Card Status & Info (Logika Kodingan 2) */
+        /* Card Status & Info */
         .status-card {
             background: linear-gradient(135deg, #003060, #0056b3);
             border-radius: 24px; color: white; padding: 40px; height: 100%;
@@ -65,7 +65,7 @@
             border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        /* Grid Layanan (Logika Kodingan 2) */
+        /* Grid Layanan */
         .layanan-card {
             background: white; padding: 30px; border-radius: 20px;
             border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; height: 100%;
@@ -78,6 +78,10 @@
         }
 
         footer { background: #0f172a; color: rgba(255,255,255,0.7); padding: 50px 0 30px; }
+        
+        /* Efek Hover Sosmed */
+        .sosmed-link { transition: 0.3s; opacity: 0.8; }
+        .sosmed-link:hover { opacity: 1; transform: scale(1.2); color: #00d2ff !important; }
     </style>
 </head>
 <body>
@@ -104,9 +108,17 @@
 <div class="container mt-4">
     <div class="carousel-container animate__animated animate__fadeIn">
         <div class="carousel-overlay"></div>
-        <img src="{{ asset('image/banner1.png') }}" class="carousel-item-img" style="opacity:1">
-        <img src="{{ asset('image/banner2.png') }}" class="carousel-item-img" style="opacity:0">
-        <img src="{{ asset('image/banner3.png') }}" class="carousel-item-img" style="opacity:0">
+        
+        @forelse($carousels as $key => $item)
+            <img src="{{ asset('storage/' . $item->image) }}" 
+                class="carousel-item-img" 
+                style="opacity: {{ $key == 0 ? '1' : '0' }};"
+                alt="{{ $item->title }}">
+        @empty
+            <img src="https://via.placeholder.com/1200x400?text=Selamat+Datang+di+Dinkop+UMTK" 
+                class="carousel-item-img" 
+                style="opacity: 1">
+        @endforelse
     </div>
 
     <div class="row g-4 mb-5">
@@ -192,12 +204,18 @@
 <footer>
     <div class="container text-center">
         <h5 class="fw-bold text-white mb-4">Dinas Koperasi & UMTK Kota Kediri</h5>
-        <div class="d-flex justify-content-center gap-3 mb-4">
-            <a href="#" class="text-white fs-4"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="text-white fs-4"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="text-white fs-4"><i class="bi bi-youtube"></i></a>
+        <div class="d-flex justify-content-center gap-4 mb-4">
+            <a href="https://www.instagram.com/dinkopumtk_kotakediri?igsh=ZHppYTV1dmxvMzJ5" target="_blank" class="text-white fs-4 sosmed-link">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/share/1D2gbybbGw/" target="_blank" class="text-white fs-4 sosmed-link">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://wa.me/6285842536" target="_blank" class="text-white fs-4 sosmed-link">
+                <i class="bi bi-whatsapp"></i>
+            </a>
         </div>
-        <p class="small mb-0 opacity-50">&copy; 2026 Pemerintah Kota Kediri. All Rights Reserved.</p>
+        <p class="small mb-0 opacity-50">&copy; 2026 PKL UNP Kediri. All Rights Reserved.</p>
     </div>
 </footer>
 
@@ -205,7 +223,7 @@
 <script>
     const items = document.querySelectorAll('.carousel-item-img');
     let current = 0;
-    if (items.length > 0) {
+    if (items.length > 1) {
         setInterval(() => {
             items[current].style.opacity = 0;
             current = (current + 1) % items.length;

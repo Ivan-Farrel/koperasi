@@ -1,126 +1,54 @@
-@extends('layouts.admin')
-
-@section('title', 'Executive Dashboard')
+@extends('admin.layout')
 
 @section('content')
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-    :root {
-        --primary-blue: #0056b3;
-        --soft-bg: #f8fafc;
-    }
+<div class="p-8 animate__animated animate__fadeIn space-y-8">
 
-    body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    /* Card Stat Modern ala Startup */
-    .stat-card {
-        background: white;
-        border-radius: 20px;
-        border: 1px solid rgba(0,0,0,0.05);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-    }
-
-    .icon-shape {
-        width: 54px;
-        height: 54px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 14px;
-    }
-
-    /* Executive Welcome Banner */
-    .welcome-banner {
-        background: linear-gradient(135deg, #003060, #0056b3);
-        border-radius: 24px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Professional Table Styling */
-    .table-container {
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-    .custom-table thead th {
-        background-color: #f8fafc;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        font-weight: 700;
-        color: #64748b;
-        padding: 18px;
-    }
-    .custom-table tbody td {
-        padding: 18px;
-        vertical-align: middle;
-        color: #334155;
-    }
-
-    .status-badge {
-        padding: 6px 14px;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 0.85rem;
-    }
-</style>
-
-<div class="animate__animated animate__fadeIn">
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    {{-- Stats Grid: Pakai Tailwind --}}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {{-- CARD: TOTAL LAYANAN --}}
-        <div class="stat-card p-6 shadow-sm">
+        <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-500 mb-1">Total Layanan</p>
-                    <h3 class="text-3xl font-extrabold text-slate-800">{{ \App\Models\Layanan::count() }}</h3>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Layanan</p>
+                    <h3 class="text-3xl font-black text-slate-800">{{ \App\Models\Layanan::count() }}</h3>
                 </div>
-                <div class="icon-shape bg-blue-50 text-blue-600">
-                    <i class="bi bi-layers-fill fs-3"></i>
+                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl">
+                    <i class="bi bi-layers-fill"></i>
                 </div>
             </div>
         </div>
 
-        {{-- CARD: TOTAL BUKU TAMU HARI INI --}}
-        <div class="stat-card p-6 shadow-sm">
+        {{-- CARD: PENGUNJUNG --}}
+        <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-500 mb-1">Pengunjung Hari Ini</p>
-                    <h3 class="text-3xl font-extrabold text-slate-800">{{ \App\Models\BukuTamu::count() ?? 0 }}</h3>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Pengunjung Hari Ini</p>
+                    <h3 class="text-3xl font-black text-slate-800">{{ \App\Models\BukuTamu::count() ?? 0 }}</h3>
                 </div>
-                <div class="icon-shape bg-indigo-50 text-indigo-600">
-                    <i class="bi bi-people-fill fs-3"></i>
+                <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl">
+                    <i class="bi bi-people-fill"></i>
                 </div>
             </div>
         </div>
 
-        {{-- CARD: STATUS SISTEM --}}
-        <div class="stat-card p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
+        {{-- CARD: STATUS --}}
+        <div class="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-500">Service Status</p>
-                    <div class="flex items-center mt-2">
-                        <span class="status-badge {{ $status === 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                            ● {{ ucfirst($status) }}
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Service Status</p>
+                    <div class="mt-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold {{ $status === 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                            <span class="w-2 h-2 rounded-full mr-2 {{ $status === 'aktif' ? 'bg-green-500' : 'bg-red-500' }}"></span>
+                            {{ strtoupper($status) }}
                         </span>
                     </div>
                 </div>
                 <form action="{{ route('admin.dashboard.toggleStatus') }}" method="POST">
                     @csrf
-                    <button type="submit" 
-                        class="px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm
-                        {{ $status === 'aktif' ? 'bg-slate-800 text-white hover:bg-slate-900' : 'bg-green-600 text-white hover:bg-green-700' }}">
+                    <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-[10px] font-black hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
                         {{ $status === 'aktif' ? 'SET BREAK' : 'SET ACTIVE' }}
                     </button>
                 </form>
@@ -128,80 +56,79 @@
         </div>
     </div>
 
-    <div class="welcome-banner p-10 text-white mb-8 shadow-xl animate__animated animate__zoomIn">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="relative z-10">
-                <h2 class="text-3xl font-extrabold mb-3">Executive Workspace</h2>
-                <p class="text-blue-100 text-lg opacity-90 max-w-2xl">
-                    Selamat datang kembali, <strong>{{ auth()->user()->name ?? 'Administrator' }}</strong>. 
-                    Pantau produktivitas dan log kunjungan DINKOP UMTK Kota Kediri hari ini.
+    {{-- Executive Welcome Banner --}}
+    <div class="relative overflow-hidden bg-gradient-to-br from-[#003060] to-[#0056b3] p-10 rounded-[32px] shadow-2xl shadow-blue-100">
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="max-w-xl text-center md:text-left">
+                <h2 class="text-4xl font-black text-white mb-4 tracking-tight">Executive Admin</h2>
+                <p class="text-blue-100 text-lg font-medium opacity-90 leading-relaxed">
+                    Selamat datang kembali, <span class="text-white border-b-2 border-blue-400">{{ auth()->user()->name ?? 'Administrator' }}</span>. Pantau produktivitas log kunjungan hari ini.
                 </p>
             </div>
-            <div class="flex gap-4 relative z-10">
-                <a href="{{ route('admin.layanan.index') }}" 
-                   class="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-xl font-bold hover:bg-white hover:text-blue-700 transition-all text-sm">
-                   Manage Services
+            <div class="flex gap-4">
+                <a href="{{ route('admin.layanan.index') }}" class="bg-white/10 backdrop-blur-xl border border-white/20 px-8 py-4 rounded-2xl font-bold text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-sm">
+                    Kelola Layanan
                 </a>
-                <a href="{{ route('admin.buku_tamu.index') }}" 
-                   class="bg-white text-blue-700 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-white/20 transition-all text-sm">
-                   View Visit Logs
+                <a href="{{ route('admin.buku_tamu.index') }}" class="bg-white px-8 py-4 rounded-2xl font-bold text-blue-700 shadow-xl hover:scale-105 transition-all duration-300 text-sm">
+                    Lihat Logs
                 </a>
             </div>
         </div>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="bg-white stat-card p-8">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-extrabold text-slate-800">
-                <i class="bi bi-journal-text me-2 text-blue-600"></i> Log Pengunjung Terbaru
+    {{-- Log Table --}}
+    <div class="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">
+                <i class="bi bi-journal-text mr-3 text-blue-600"></i> Log Pengunjung Terbaru
             </h3>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Real-time Activity</span>
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-slate-50 px-4 py-2 rounded-full">Real-time Activity</span>
         </div>
 
-        <div class="table-container">
-            <table class="w-full custom-table">
-                <thead>
+        <div class="overflow-x-auto rounded-2xl border border-gray-50">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50">
                     <tr>
-                        <th>Identitas</th>
-                        <th>Kecamatan</th>
-                        <th>Kelurahan</th>
-                        <th>Layanan</th>
-                        <th>Nomor HP</th>
+                        <th class="p-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Identitas</th>
+                        <th class="p-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Wilayah</th>
+                        <th class="p-5 text-[11px] font-black text-slate-400 uppercase tracking-widest">Layanan</th>
+                        <th class="p-5 text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Kontak</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-gray-50">
                     @forelse($pengunjung as $item)
-                        <tr class="hover:bg-slate-50/50 transition-colors">
-                            <td>
-                                <div class="font-bold text-slate-800">{{ $item->nama }}</div>
-                                <div class="text-[10px] text-slate-400">Recorded at: {{ $item->created_at->format('H:i') }} WIB</div>
-                            </td>
-                            <td class="text-sm font-medium text-slate-600">{{ $item->kecamatan }}</td>
-                            <td class="text-sm font-medium text-slate-600">{{ $item->kelurahan }}</td>
-                            <td>
-                                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold border border-blue-100">
-                                    {{ $item->layanan->nama_layanan ?? '-' }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="flex items-center text-slate-600 font-medium">
-                                    <i class="bi bi-whatsapp text-green-500 me-2"></i> {{ $item->no_hp }}
-                                </div>
-                            </td>
-                        </tr>
+                    <tr class="hover:bg-slate-50/50 transition-all group">
+                        <td class="p-5">
+                            <div class="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{{ $item->nama }}</div>
+                            <div class="text-[10px] font-medium text-slate-400 uppercase mt-1">{{ $item->created_at->format('H:i') }} WIB</div>
+                        </td>
+                        <td class="p-5">
+                            <div class="text-sm font-bold text-slate-600">{{ $item->kecamatan }}</div>
+                            <div class="text-xs text-slate-400">{{ $item->kelurahan }}</div>
+                        </td>
+                        <td class="p-5">
+                            <span class="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-xl text-[10px] font-black border border-blue-100 inline-block">
+                                {{ $item->layanan->nama_layanan ?? '-' }}
+                            </span>
+                        </td>
+                        <td class="p-5 text-right">
+                            <div class="inline-flex items-center text-sm font-bold text-slate-700 bg-green-50 px-4 py-2 rounded-xl border border-green-100">
+                                <i class="bi bi-whatsapp text-green-500 mr-2"></i> {{ $item->no_hp }}
+                            </div>
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" class="p-12 text-center">
-                                <i class="bi bi-inbox text-slate-200 display-4 mb-3"></i>
-                                <p class="text-slate-400 font-medium mt-3">Belum ada data pengunjung yang terekam hari ini.</p>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="p-20 text-center">
+                            <div class="text-slate-300 text-5xl mb-4"><i class="bi bi-inbox"></i></div>
+                            <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">No entries found for today</p>
+                        </td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
-
 @endsection
