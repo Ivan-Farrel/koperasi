@@ -211,7 +211,7 @@
             <a href="https://www.facebook.com/share/1D2gbybbGw/" target="_blank" class="text-white fs-4 sosmed-link">
                 <i class="bi bi-facebook"></i>
             </a>
-            <a href="https://wa.me/6285842536" target="_blank" class="text-white fs-4 sosmed-link">
+            <a href="https://wa.me/6285735313029" target="_blank" class="text-white fs-4 sosmed-link">
                 <i class="bi bi-whatsapp"></i>
             </a>
         </div>

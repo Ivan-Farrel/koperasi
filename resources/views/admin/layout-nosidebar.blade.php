@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Admin - @yield('title', 'Buku Tamu')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_Kota_Kediri_-_Seal_of_Kediri_City.svg/1280px-Logo_Kota_Kediri_-_Seal_of_Kediri_City.svg.png">
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
